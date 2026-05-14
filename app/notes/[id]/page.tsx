@@ -6,8 +6,12 @@ import {
 import { fetchNoteById } from '@/lib/api';
 import NoteDetailsClient from './NoteDetails.client';
 
-export default async function NotePage({ params }: { params: { id: string } }) {
-  const { id } = params;
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+
+export default async function NotePage({ params }: PageProps) {
+  const { id } = await params; // Обов'язково додаємо await для розпакування id
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
